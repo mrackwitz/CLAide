@@ -18,10 +18,12 @@ module CLAide
         type = ARGV::Parser.argument_type(string)
         list = suggestion_list(command_class, type)
         suggestion = ValidationHelper.suggestion(string, list)
-        pretty_suggestion = prettify_validation_suggestion(suggestion, type)
+        if suggestion
+          suggestion = prettify_validation_suggestion(suggestion, type)
+        end
         string_type = type == :arg ? 'command' : 'option'
         "Unknown #{string_type}: `#{string}`\n" \
-          "Did you mean: #{pretty_suggestion}"
+          "Did you mean: #{suggestion}"
       end
 
       # @return [Array<String>] The list of the valid arguments for a command
